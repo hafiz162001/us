@@ -4,16 +4,109 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Penyimpan Kenangan</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background: #f8b500;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .memory {
+      background: #fef6e4;
+      border-left: 5px solid #f8b500;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .memory img {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>📖 Penyimpan Kenangan</h1>
-    <textarea id="memoryInput" placeholder="Tulis kenangan indahmu di sini..."></textarea>
+    <h1>📸 Penyimpan Kenangan</h1>
+    <textarea id="memoryInput" placeholder="Tulis kenangan indahmu..."></textarea>
+    <input type="file" id="imageInput" accept="image/*">
     <button onclick="saveMemory()">Simpan Kenangan</button>
-    <h2>Kenangan Tersimpan:</h2>
-    <ul id="memoryList"></ul>
+    <div id="memoryList"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function saveMemory() {
+      const memoryText = document.getElementById('memoryInput').value.trim();
+      const imageInput = document.getElementById('imageInput');
+      const file = imageInput.files[0];
+
+      if (!memoryText && !file) return alert("Isi kenangan atau tambahkan gambar dulu ya!");
+
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const memories = JSON.parse(localStorage.getItem('memories')) || [];
+        const newMemory = {
+          text: memoryText,
+          image: file ? reader.result : null,
+        };
+        memories.push(newMemory);
+        localStorage.setItem('memories', JSON.stringify(memories));
+        document.getElementById('memoryInput').value = "";
+        document.getElementById('imageInput').value = "";
+        displayMemories();
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        reader.onloadend(); // run directly if no image
+      }
+    }
+
+    function displayMemories() {
+      const memoryList = document.getElementById('memoryList');
+      memoryList.innerHTML = "";
+      const memories = JSON.parse(localStorage.getItem('memories')) || [];
+      memories.reverse().forEach(mem => {
+        const div = document.createElement('div');
+        div.className = 'memory';
+        div.innerHTML = `<p>${mem.text}</p>`;
+        if (mem.image) {
+          div.innerHTML += `<img src="${mem.image}" alt="Kenangan">`;
+        }
+        memoryList.appendChild(div);
+      });
+    }
+
+    window.onload = displayMemories;
+  </script>
 </body>
 </html>
