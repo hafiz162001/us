@@ -1,1 +1,152 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penyimpan Kenangan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #fceabb, #f8b500);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+    }
+    h1 {
+      text-align: center;
+      color: #f8b500;
+      margin-bottom: 30px;
+    }
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #f8b500;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e09e00;
+    }
+    .memory {
+      background: #fff8e1;
+      border-left: 6px solid #f8b500;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .memory:hover {
+      background: #fff3c4;
+    }
+    .memory img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .preview {
+      max-height: 150px;
+      margin-bottom: 10px;
+      display: block;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📔 Penyimpan Kenangan</h1>
+    <textarea id="memoryInput" placeholder="Tulis kenangan indahmu di sini..."></textarea>
+    <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+    <img id="preview" class="preview" style="display:none;" />
+    <button onclick="saveMemory()">Simpan Kenangan</button>
+    <div id="memoryList"></div>
+  </div>
+
+  <script>
+    function previewImage(event) {
+      const preview = document.getElementById('preview');
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
+    function saveMemory() {
+      const text = document.getElementById('memoryInput').value.trim();
+      const imageInput = document.getElementById('imageInput');
+      const file = imageInput.files[0];
+
+      if (!text && !file) return alert(\"Tulis sesuatu atau tambahkan gambar dulu ya 😅\");
+
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const memories = JSON.parse(localStorage.getItem('memories')) || [];
+        const newMemory = {
+          text: text,
+          image: file ? reader.result : null,
+        };
+        memories.push(newMemory);
+        localStorage.setItem('memories', JSON.stringify(memories));
+        document.getElementById('memoryInput').value = \"\";
+        document.getElementById('imageInput').value = \"\";
+        document.getElementById('preview').style.display = \"none\";
+        displayMemories();
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        reader.onloadend(); // Run langsung kalau tidak ada file
+      }
+    }
+
+    function displayMemories() {
+      const list = document.getElementById('memoryList');
+      list.innerHTML = \"\";
+      const memories = JSON.parse(localStorage.getItem('memories')) || [];
+      memories.reverse().forEach(mem => {
+        const div = document.createElement('div');
+        div.className = 'memory';
+        div.innerHTML = `<p>${mem.text}</p>`;
+        if (mem.image) {
+          div.innerHTML += `<img src=\"${mem.image}\" alt=\"Kenangan\">`;
+        }
+        list.appendChild(div);
+      });
+    }
+
+    window.onload = displayMemories;
+  </script>
+</body>
+</html>
