@@ -89,7 +89,7 @@
       100% { transform: translateY(-120vh); opacity: 0; }
     }
 
-    /* Modal musik */
+    /* Modal musik + countdown */
     .modal {
       position: fixed;
       top: 0;
@@ -125,11 +125,6 @@
       color: #ff4e50;
     }
 
-    .modal p {
-      margin-bottom: 20px;
-      color: #555;
-    }
-
     .modal button {
       background: #ff4e50;
       color: white;
@@ -145,15 +140,24 @@
       background: #e43a3d;
     }
 
+    /* Countdown */
+    #countdown {
+      font-size: 5rem;
+      color: #ff4e50;
+      font-weight: bold;
+      display: none;
+      animation: scaleUp 1s ease infinite;
+    }
+
+    @keyframes scaleUp {
+      0% { transform: scale(0.5); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+
     /* Responsif */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      .caption {
-        font-size: 1rem;
-        padding: 10px;
-      }
+      h1 { font-size: 1.8rem; }
+      .caption { font-size: 1rem; padding: 10px; }
     }
   </style>
 </head>
@@ -178,7 +182,7 @@
       <img src="img/18.jpeg" alt="Foto 3">
       <div class="caption">Terimakasih atas segalanya yah</div>
     </div>
-     <div class="slide">
+    <div class="slide">
       <img src="img/12.jpeg" alt="Foto 3">
       <div class="caption">Semoga selalu nyaman bersamaku 😊</div>
     </div>
@@ -195,12 +199,12 @@
   <!-- Musik Latar -->
   <audio id="bg-music" src="1.mp3" loop></audio>
 
-  <!-- Modal Musik -->
+  <!-- Modal Musik + Countdown -->
   <div class="modal" id="music-modal">
-    <div class="modal-content">
+    <div class="modal-content" id="modal-content">
       <h2>🎵 Surpriseee! 🎉</h2>
-  
       <button id="start-music">Ayoo!</button>
+      <div id="countdown"></div>
     </div>
   </div>
 
@@ -208,20 +212,32 @@
     const bgMusic = document.getElementById("bg-music");
     const musicModal = document.getElementById("music-modal");
     const startMusicBtn = document.getElementById("start-music");
+    const countdownEl = document.getElementById("countdown");
     const slides = document.querySelectorAll('.slide');
     let slideIndex = 0;
 
-    startMusicBtn.addEventListener("click", () => {
-      bgMusic.play();
-      musicModal.style.display = "none";
-    });
+    // Fungsi buat munculin balon
+    function createBalloons() {
+      for (let i = 0; i < 10; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * window.innerWidth + 'px';
+        balloon.style.backgroundColor = getRandomColor();
+        balloon.style.animationDuration = 3 + Math.random() * 3 + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 6000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#E73C7E'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
     function showSlide(n) {
       slides.forEach((slide, i) => {
         slide.classList.remove('active');
-        if (i === n) {
-          slide.classList.add('active');
-        }
+        if (i === n) slide.classList.add('active');
       });
       createBalloons();
     }
@@ -231,27 +247,29 @@
       showSlide(slideIndex);
     }
 
-    function createBalloons() {
-      for (let i = 0; i < 10; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.style.left = Math.random() * window.innerWidth + 'px';
-        balloon.style.backgroundColor = getRandomColor();
-        balloon.style.animationDuration = 3 + Math.random() * 3 + 's';
-        document.body.appendChild(balloon);
-
-        setTimeout(() => {
-          balloon.remove();
-        }, 6000);
-      }
-    }
-
-    function getRandomColor() {
-      const colors = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#E73C7E'];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-
     setInterval(nextSlide, 10000);
+
+    // Countdown logic
+    startMusicBtn.addEventListener("click", () => {
+      bgMusic.play();
+      startMusicBtn.style.display = "none";
+
+      let counter = 3;
+      countdownEl.style.display = "block";
+      countdownEl.textContent = counter;
+
+      const countdownInterval = setInterval(() => {
+        counter--;
+        if (counter === 0) {
+          clearInterval(countdownInterval);
+          musicModal.style.display = "none";
+          nextSlide();
+          createBalloons();
+        } else {
+          countdownEl.textContent = counter;
+        }
+      }, 1000);
+    });
   </script>
 </body>
 </html>
