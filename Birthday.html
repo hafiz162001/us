@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
+  <title>Tadaaa 🎉</title>
   <style>
     body {
       margin: 0;
@@ -16,6 +16,7 @@
       height: 100vh;
       overflow: hidden;
       text-align: center;
+      cursor: url('img/icon.png') 32 32, auto;
     }
 
     h1 {
@@ -23,13 +24,6 @@
       color: #fff;
       margin-bottom: 20px;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-    }
-
-    .countdown {
-      font-size: 2rem;
-      color: #fff;
-      margin-bottom: 20px;
-      display: none;
     }
 
     .slideshow-container {
@@ -41,7 +35,7 @@
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       background: #fff;
-      display: none;
+      display: none; /* disembunyikan sebelum countdown selesai */
     }
 
     .slide {
@@ -66,105 +60,220 @@
       z-index: 1;
     }
 
-    button {
-      padding: 12px 24px;
-      font-size: 1.1rem;
-      border: none;
-      background: #ff4b5c;
-      color: white;
+    .caption {
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 15px;
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: background 0.3s ease;
+      width: 80%;
     }
 
-    button:hover {
-      background: #e8434d;
+    /* Countdown */
+    #countdown {
+      display: none;
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
     }
 
+    /* Balon */
     .balloon {
       position: absolute;
       bottom: -150px;
       width: 40px;
-      height: 60px;
-      background-color: #ff4b5c;
+      height: 50px;
+      background-color: red;
       border-radius: 50%;
-      opacity: 0.7;
-      animation: floatUp 8s linear infinite;
+      opacity: 0.8;
+      animation: float 6s linear infinite;
     }
 
-    @keyframes floatUp {
-      from { transform: translateY(0); }
-      to { transform: translateY(-120vh); }
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.9; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    /* Modal musik */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      max-width: 350px;
+      width: 80%;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal h2 {
+      margin-bottom: 10px;
+      color: #ff4e50;
+    }
+
+    .modal button {
+      background: #ff4e50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .modal button:hover {
+      background: #e43a3d;
+    }
+
+    /* Responsif */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .caption {
+        font-size: 1rem;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Happy Birthday! 🎂</h1>
-  <button id="startBtn">Ayo Mulai!</button>
-  <div class="countdown" id="countdown"></div>
+  <h1>🎉 Selamat Ulang Tahun Tayaang 😊 🎉</h1>
 
-  <div class="slideshow-container" id="slideshow">
-    <div class="slide active"><img src="img/1.jpg" alt="Foto 1"></div>
-    <div class="slide"><img src="img/2.jpg" alt="Foto 2"></div>
-    <div class="slide"><img src="img/3.jpg" alt="Foto 3"></div>
+  <!-- Countdown -->
+  <div id="countdown">5</div>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="img/16.jpeg" alt="Foto 1">
+      <div class="caption">Ceyamat Ulang Cayun</div>
+    </div>
+    <div class="slide">
+      <img src="img/17.jpeg" alt="Foto 2">
+      <div class="caption">Ceyamat Ulang Caun</div>
+    </div>
+    <div class="slide">
+      <img src="img/15.jpeg" alt="Foto 3">
+      <div class="caption">Ceyamat Uyang Taun Olang Aneh</div>
+    </div>
+    <div class="slide">
+      <img src="img/18.jpeg" alt="Foto 4">
+      <div class="caption">Terimakasih atas segalanya yah</div>
+    </div>
+    <div class="slide">
+      <img src="img/12.jpeg" alt="Foto 5">
+      <div class="caption">Semoga selalu nyaman bersamaku 😊</div>
+    </div>
+    <div class="slide">
+      <img src="img/14.jpeg" alt="Foto 6">
+      <div class="caption">Dear Mungilku...</div>
+    </div>
+    <div class="slide">
+      <img src="img/1.jpeg" alt="Foto 7">
+      <div class="caption">Aku Mencintaimu ❤️</div>
+    </div>
   </div>
 
-  <audio id="bgMusic" src="music.mp3"></audio>
+  <!-- Musik Latar -->
+  <audio id="bg-music" src="1.mp3" loop></audio>
+
+  <!-- Modal Musik -->
+  <div class="modal" id="music-modal">
+    <div class="modal-content">
+      <h2>🎵 Surpriseee! 🎉</h2>
+      <button id="start-music">Ayoo!</button>
+    </div>
+  </div>
 
   <script>
-    const startBtn = document.getElementById("startBtn");
+    const bgMusic = document.getElementById("bg-music");
+    const musicModal = document.getElementById("music-modal");
+    const startMusicBtn = document.getElementById("start-music");
     const countdown = document.getElementById("countdown");
-    const slideshow = document.getElementById("slideshow");
+    const slideshow = document.querySelector(".slideshow-container");
     const slides = document.querySelectorAll(".slide");
-    const music = document.getElementById("bgMusic");
-    let currentSlide = 0;
+    let slideIndex = 0;
     let slideInterval;
 
-    function startBalloons() {
-      for (let i = 0; i < 15; i++) {
+    // Fungsi balon
+    function createBalloons() {
+      for (let i = 0; i < 10; i++) {
         const balloon = document.createElement("div");
-        balloon.classList.add("balloon");
-        balloon.style.left = Math.random() * 100 + "vw";
-        balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-        balloon.style.animationDuration = (6 + Math.random() * 4) + "s";
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * window.innerWidth + "px";
+        balloon.style.backgroundColor = getRandomColor();
+        balloon.style.animationDuration = 3 + Math.random() * 3 + "s";
         document.body.appendChild(balloon);
 
-        setTimeout(() => balloon.remove(), 10000);
+        setTimeout(() => balloon.remove(), 6000);
       }
     }
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
+    function getRandomColor() {
+      const colors = ["#FF6B6B","#FFD93D","#6BCB77","#4D96FF","#E73C7E"];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    startBtn.addEventListener("click", () => {
-      startBtn.style.display = "none";
+    function showSlide(n) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === n) slide.classList.add("active");
+      });
+      createBalloons();
+    }
 
-      // Musik langsung diputar
-      music.play();
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
 
-      // Tampilkan countdown
+    // Countdown → mulai slideshow
+    startMusicBtn.addEventListener("click", () => {
+      bgMusic.play(); // Musik langsung nyala
+      musicModal.style.display = "none";
       countdown.style.display = "block";
+
       let timeLeft = 5;
+      countdown.textContent = timeLeft;
 
       const timer = setInterval(() => {
-        countdown.textContent = timeLeft;
         timeLeft--;
+        countdown.textContent = timeLeft;
 
-        if (timeLeft < 0) {
+        if (timeLeft === 0) {
           clearInterval(timer);
           countdown.style.display = "none";
           slideshow.style.display = "block";
-          startBalloons();
 
-          // Mulai slideshow setelah countdown selesai
-          slideInterval = setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-          }, 8000); // 8 detik per gambar
+          // Mulai slideshow 10 detik per gambar
+          showSlide(0);
+          slideInterval = setInterval(nextSlide, 7000);
         }
       }, 1000);
     });
