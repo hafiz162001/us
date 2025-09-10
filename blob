@@ -341,7 +341,7 @@
         <div class="menu-icon">🍕</div>Makan
       </div>
 
-      <!-- <div class="menu-button" onclick="window.location.href='https://hafiz162001.github.io/us/'">
+      <!-- <div class="menu-button" onclick="window.location.href='Birthday.html'">
         <div class="menu-icon">🎂</div>Habede
       </div>
 
@@ -511,8 +511,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
