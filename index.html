@@ -1,185 +1,369 @@
+
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Galeri Kenangan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to right, #fceabb, #f8b500);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" id="main">
+    <div class="card app"></div>
+
+    <div class="image1">
+      <div class="meme-caption caption-top"></div>
+      <div class="meme-caption caption-bottom"></div>
+    </div>
+
+    <div class="image2">
+      <div class="meme-caption caption-top"></div>
+      <div class="meme-caption caption-bottom"></div>
+    </div>
+
+    <div class="card calendar-date">
+      <span id="current-date"></span>
+      <div class="calendar-day" id="calendar-day"></div>
+      <div class="calendar-month-year" id="calendar-month-year"></div>
+    </div>
+
+    <div class="card circle-clock">
+      <div id="current-time"></div>
+    </div>
+
+    <div class="mini-image"></div>
+    <div class="card checklist"></div>
+    <div class="circle-img"></div>
+
+    <div class="footer-menu">
+      <div class="menu-button" onclick="alert('Game? You’ve already been scrolling memes for 3 hours 😆')">
+        <div class="menu-icon">🎮</div>Hiburan
+      </div>
+      <div class="menu-button" onclick="showGallery()">
+        <div class="menu-icon">🍕</div>Makan
+      </div>
+    <div class="menu-button" onclick="window.location.href='Birthday.html'">
+  <div class="menu-icon">🎂</div>Habede
+</div>
+
+      <div class="menu-button" onclick="alert('🔔 Notification: Time to sleep!')">
+        <div class="menu-icon">🔔</div>Notification
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-section" id="gallery">
+    <div class="gallery-item"><img src="img/2.jpeg" alt="cat meme"></div>
+    <div class="gallery-item"><img src="img/3.jpeg" alt="bf meme"></div>
+    <div class="gallery-item"><img src="img/8.jpeg" alt="lotr meme"></div>
+
+    <div class="gallery-item"><img src="img/10.jpeg" alt="bf meme"></div>
+    <div class="gallery-item"><img src="img/11.jpeg" alt="lotr meme"></div>
+      <div class="gallery-item"><img src="img/19.jpeg" alt="lotr meme"></div>
+    <div class="back-button" onclick="goBack()">⬅ Back to Dashboard</div>
+  </div>
+
+<script>
+  const main = document.getElementById('main');
+  const gallery = document.getElementById('gallery');
+
+  const showGallery = () => {
+    main.style.display = 'none';
+    gallery.classList.add('active');
+  };
+  const goBack = () => {
+    main.style.display = 'grid';
+    gallery.classList.remove('active');
+  };
+
+  const updateDateTime = () => {
+    const now = new Date();
+
+    // Single date display
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/New_York' };
+    const dateStr = now.toLocaleDateString('en-GB', dateOptions);
+    document.getElementById('current-date').textContent = dateStr;
+
+    // Time
+    document.getElementById('current-time').textContent =
+      now.toLocaleTimeString('en-GB', { timeZone: 'America/New_York' });
+  };
+
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+
+<style>
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Roboto, sans-serif;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+  
 
-    h1 {
-      text-align: center;
-      color: #f8b500;
-      margin-bottom: 30px;
-    }
-
-    .form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin-bottom: 40px;
-    }
-
-    textarea, input[type="file"], button {
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      background-color: #f8b500;
-      color: #fff;
-      font-weight: bold;
-      border: none;
+    /* Tombol Chat */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 150px;
+      right:15px;
+      width: 58px;
+      height: 58px;
+      background-color: #0a2342; /* Navy utama */
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       cursor: pointer;
+      font-size: 30px;
+      transition: 0.3s ease;
+      z-index: 999;
     }
 
-    button:hover {
-      background-color: #e09e00;
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+      background-color: #123d6f;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-    }
-
-    .card {
+    /* Container Chatbot */
+    .chatbot-container {
+      position: fixed;
+      bottom: 200px;
+      right: 25px;
+      width: 350px;
+      max-height: 500px;
       background: #fff;
-      padding: 10px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
       overflow: hidden;
-      cursor: pointer;
+      z-index: 999;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header Chatbot */
+    .chatbot-header {
+      background-color: #0a2342;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Isi Chat */
+    .chatbot-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #f8fafc;
+    }
+
+    /* Pesan Bot */
+    .bot-message {
+      background-color: #e7f0ff;
+      color: #0a2342;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 8px 0;
+      max-width: 80%;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Pesan User */
+    .user-message {
+      background-color: #0a2342;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 8px 0;
+      max-width: 80%;
+      font-size: 14px;
+      align-self: flex-end;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer Chatbot */
+    .chatbot-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    .chatbot-footer input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 14px;
       transition: 0.2s;
     }
 
-    .card:hover {
-      transform: scale(1.02);
+    .chatbot-footer input:focus {
+      border-color: #0a2342;
     }
 
-    .card img {
-      width: 100%;
-      border-radius: 8px;
+    .chatbot-footer button {
+      background-color: #0a2342;
+      border: none;
+      color: white;
+      margin-left: 8px;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      align-items: center;
-      justify-content: center;
+    .chatbot-footer button:hover {
+      background-color: #123d6f;
     }
 
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 90%;
-      max-height: 90%;
-      text-align: center;
-      overflow: auto;
+    /* Scrollbar modern */
+    .chatbot-body::-webkit-scrollbar {
+      width: 6px;
     }
-
-    .modal-content img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    .chatbot-body::-webkit-scrollbar-thumb {
+      background: #b5c4e3;
+      border-radius: 3px;
     }
-
-    .close-btn {
-      margin-top: 10px;
-      background: #f44336;
+    .chatbot-body::-webkit-scrollbar-track {
+      background: transparent;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🖼️ Galeri Kenangan</h1>
-    <div class="form">
-      <textarea id="memoryText" placeholder="Tuliskan kenangan..."></textarea>
-      <input type="file" id="memoryImage" accept="image/*">
-      <button onclick="saveMemory()">Simpan ke Galeri</button>
-    </div>
+  <!-- Tombol Chat -->
+ <div class="chatbot-btn" id="chatbot-btn">🎁</div>
 
-    <div class="gallery" id="galleryList"></div>
+<!-- Panel Chatbot -->
+<div class="chatbot-container" id="chatbot-container">
+  <div class="chatbot-header">🎉 Kejutan Spesial!</div>
+  <div class="chatbot-body" id="chatbot-body">
+    <div class="bot-message">Hai tayang😊</div>
+    <div class="bot-message">Hmm... kayaknya hari ini ada sesuatu yang aneh😵</div>
+    <div class="bot-message">Mau tahu nggak? Ketik <b>ya</b> atau <b>engga</b> 😉</div>
   </div>
-
-  <!-- Modal untuk lihat detail -->
-  <div class="modal" id="modal">
-    <div class="modal-content" id="modalContent">
-      <img id="modalImage" src="" alt="Preview">
-      <p id="modalText"></p>
-      <button class="close-btn" onclick="closeModal()">Tutup</button>
-    </div>
+  <div class="chatbot-footer">
+    <input type="text" id="user-input" placeholder="Ketik pesan di sini..." />
+    <button id="send-btn">➤</button>
   </div>
+</div>
 
-  <script>
-    function saveMemory() {
-      const text = document.getElementById('memoryText').value.trim();
-      const fileInput = document.getElementById('memoryImage');
-      const file = fileInput.files[0];
+<script>
+  const chatbotBtn = document.getElementById("chatbot-btn");
+  const chatbotContainer = document.getElementById("chatbot-container");
+  const chatbotBody = document.getElementById("chatbot-body");
+  const userInput = document.getElementById("user-input");
+  const sendBtn = document.getElementById("send-btn");
 
-      if (!file) {
-        alert('Silakan pilih gambar dulu.');
-        return;
+  // Percakapan surprise
+  const surpriseMessages = [
+    "Hehehe 😎, aku udah nebak kamu bakal jawab gitu!",
+    "Sekarang tutup mata kamu sebentar 👀...",
+    "Bayangin banyak balon 🎈, kue 🎂, dan aku datang menghampirimu...",
+    "Dan aku berbisik...hari ini kamu... ",
+    "🎉 ULANG TAHUN!! 🎉",
+    "Klik link iniii ya! 😍👇",
+  ];
+
+  const surpriseLink = "birthday.html";
+
+  let stage = 0;
+
+  // Tampilkan / sembunyikan chatbot
+  chatbotBtn.addEventListener("click", () => {
+    chatbotContainer.style.display =
+      chatbotContainer.style.display === "flex" ? "none" : "flex";
+  });
+
+  // Fungsi kirim pesan
+  sendBtn.addEventListener("click", sendMessage);
+  userInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const message = userInput.value.trim().toLowerCase();
+    if (message === "") return;
+
+    // Pesan user
+    const userMsg = document.createElement("div");
+    userMsg.classList.add("user-message");
+    userMsg.textContent = message;
+    chatbotBody.appendChild(userMsg);
+
+    // Proses logika bot
+    setTimeout(() => {
+      const botMsg = document.createElement("div");
+      botMsg.classList.add("bot-message");
+
+      if (stage === 0) {
+        if (message === "ya" || message === "iya" || message === "mau") {
+          botMsg.textContent = surpriseMessages[stage];
+          stage++;
+        } else {
+          botMsg.textContent = "Yakin engga? 😳 Coba ketik 'ya' deh...";
+        }
+      } else if (stage < surpriseMessages.length) {
+        botMsg.textContent = surpriseMessages[stage];
+        stage++;
+
+        // Kalau sudah sampai tahap terakhir, kasih link hadiah 🎁
+        if (stage === surpriseMessages.length) {
+          const link = document.createElement("a");
+          link.href = surpriseLink;
+          link.target = "_blank";
+          link.textContent = "🎁 Buka Hadiah 🎁";
+          link.classList.add(
+            "block",
+            "mt-2",
+            "bg-blue-600",
+            "text-white",
+            "px-4",
+            "py-2",
+            "rounded-lg",
+            "text-center",
+            "font-semibold",
+            "shadow-lg",
+            "hover:bg-blue-700",
+            "transition"
+          );
+          botMsg.appendChild(document.createElement("br"));
+          botMsg.appendChild(link);
+        }
       }
 
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const memories = JSON.parse(localStorage.getItem('memories')) || [];
-        memories.push({ text: text, image: reader.result });
-        localStorage.setItem('memories', JSON.stringify(memories));
-        document.getElementById('memoryText').value = '';
-        document.getElementById('memoryImage').value = '';
-        displayGallery();
-      };
-      reader.readAsDataURL(file);
-    }
+      chatbotBody.appendChild(botMsg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }, 600);
 
-    function displayGallery() {
-      const list = document.getElementById('galleryList');
-      list.innerHTML = '';
-      const memories = JSON.parse(localStorage.getItem('memories')) || [];
+    userInput.value = "";
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+  }
+</script>
 
-      memories.reverse().forEach((mem, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.onclick = () => showModal(mem.image, mem.text);
-        card.innerHTML = `<img src=\"${mem.image}\" alt=\"Kenangan\">`;
-        list.appendChild(card);
-      });
-    }
-
-    function showModal(imageSrc, text) {
-      document.getElementById('modalImage').src = imageSrc;
-      document.getElementById('modalText').innerText = text;
-      document.getElementById('modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-
-    window.onload = displayGallery;
-  </script>
 </body>
 </html>

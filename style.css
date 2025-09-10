@@ -1,0 +1,196 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #eae2d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container,
+.gallery-section {
+  width: 90%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fit-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* App card (8.jpeg) */
+.app {
+  background: url('img/4.jpeg') center/cover no-repeat;
+  border-radius: 16px;
+  height: 300px;
+}
+
+.checklist {
+  background: url('img/18.jpeg') center/contain no-repeat;
+  border-radius: 16px;
+  height: 200px;
+}
+
+.image1, .image2 {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  position: relative;
+}
+
+.image1 { background-image: url('img/9.jpeg'); }
+.image2 { background-image: url('img/12.jpeg'); }
+
+.meme-caption {
+  position: absolute;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.caption-top { top: 0; }
+.caption-bottom { bottom: 0; }
+
+/* Date box */
+.calendar-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
+.calendar-day {
+  font-size: 48px;
+  font-weight: bold;
+  color: #000;
+  line-height: 1;
+}
+
+.calendar-month-year {
+  font-size: 16px;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.circle-clock {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  background: #fff;
+  border: 3px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+.mini-image {
+  background: url('https://source.unsplash.com/150x100/?palmtree') center/cover;
+  border-radius: 12px;
+  height: 100px;
+}
+
+.circle-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: url('img/7.jpeg') center/cover;
+  margin: auto;
+}
+
+.menu-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #fff;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.menu-icon { font-size: 24px; margin-bottom: 5px; }
+
+.footer-menu {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.gallery-section {
+  display: none;
+  margin-top: 30px;
+}
+
+.gallery-section.active { display: grid; }
+
+.gallery-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+}
+
+.back-button {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .app, .image1, .image2 { height: 200px; }
+}
+
+@media (max-width: 480px) {
+  .calendar-day { font-size: 36px; }
+  .calendar-month-year { font-size: 14px; }
+}
