@@ -417,11 +417,10 @@
 
     const updateDateTime = () => {
       const now = new Date();
-     const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-const dateStr = now.toLocaleDateString('id-ID', dateOptions);
-document.getElementById('current-date').textContent = dateStr;
-document.getElementById('current-time').textContent = now.toLocaleTimeString('id-ID');
-
+      const dateOptions = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/New_York' };
+      const dateStr = now.toLocaleDateString('en-GB', dateOptions);
+      document.getElementById('current-date').textContent = dateStr;
+      document.getElementById('current-time').textContent =
         now.toLocaleTimeString('en-GB', { timeZone: 'America/New_York' });
     };
 
@@ -511,4 +510,3 @@ document.getElementById('current-time').textContent = now.toLocaleTimeString('id
   </script>
 </body>
 </html>
-
