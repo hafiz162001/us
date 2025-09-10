@@ -1,278 +1,170 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tadaaa 🎉</title>
+  <title>Happy Birthday 🎉</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      padding: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      overflow: hidden;
+      background-color: #000;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
       text-align: center;
-      cursor: url('img/icon.png') 32 32, auto;
     }
 
     h1 {
       font-size: 2.5rem;
-      color: #fff;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
 
-    .slideshow-container {
+    #countdown {
+      font-size: 3rem;
+      margin-top: 20px;
+      display: none;
+    }
+
+    #slideshow {
+      display: none;
       position: relative;
-      width: 90%;
+      width: 80%;
       max-width: 600px;
-      aspect-ratio: 4/3;
+      height: 350px;
       overflow: hidden;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+      margin-top: 20px;
     }
 
-    .slide {
+    #slideshow img {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-
-    .slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
 
-    .slide.active {
+    #slideshow img.active {
       opacity: 1;
-      z-index: 1;
     }
 
-    .caption {
-      color: #fff;
-      font-size: 1.3rem;
-      padding: 15px;
+    #balloons {
+      display: none;
       position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 10px;
-      width: 80%;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
 
-    /* Balon */
     .balloon {
       position: absolute;
-      bottom: -150px;
       width: 40px;
       height: 50px;
       background-color: red;
-      border-radius: 50% 50% 50% 50%;
-      opacity: 0.8;
+      border-radius: 50%;
       animation: float 6s linear infinite;
     }
 
     @keyframes float {
-      0% { transform: translateY(0); opacity: 0.9; }
-      100% { transform: translateY(-120vh); opacity: 0; }
+      0% { transform: translateY(100vh) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
     }
 
-    /* Modal musik + countdown */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-    }
-
-    .modal-content {
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      max-width: 350px;
-      width: 80%;
-      animation: popIn 0.4s ease;
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0.7); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .modal h2 {
-      margin-bottom: 10px;
-      color: #ff4e50;
-    }
-
-    .modal button {
-      background: #ff4e50;
-      color: white;
+    #start-btn {
+      padding: 12px 25px;
+      background-color: #ff4081;
       border: none;
-      padding: 12px 20px;
-      font-size: 1rem;
       border-radius: 8px;
+      font-size: 1.2rem;
       cursor: pointer;
-      transition: background 0.3s ease;
+      color: white;
+      transition: background 0.3s;
     }
 
-    .modal button:hover {
-      background: #e43a3d;
-    }
-
-    /* Countdown */
-    #countdown {
-      font-size: 5rem;
-      color: #ff4e50;
-      font-weight: bold;
-      display: none;
-      animation: scaleUp 1s ease infinite;
-    }
-
-    @keyframes scaleUp {
-      0% { transform: scale(0.5); opacity: 0.5; }
-      100% { transform: scale(1.2); opacity: 1; }
-    }
-
-    /* Responsif */
-    @media (max-width: 768px) {
-      h1 { font-size: 1.8rem; }
-      .caption { font-size: 1rem; padding: 10px; }
+    #start-btn:hover {
+      background-color: #e91e63;
     }
   </style>
 </head>
 <body>
-  <h1>🎉 Selamat Ulang Tahun Tayaang 😊 🎉</h1>
+  <h1>🎂 Selamat Ulang Tahun 🎂</h1>
+  <button id="start-btn">Ayo 🎉</button>
+  <div id="countdown">5</div>
 
-  <!-- Slideshow -->
-  <div class="slideshow-container">
-    <div class="slide active">
-      <img src="img/16.jpeg" alt="Foto 1">
-      <div class="caption">Ceyamat Ulang Cayun</div>
-    </div>
-    <div class="slide">
-      <img src="img/17.jpeg" alt="Foto 2">
-      <div class="caption">Ceyamat Ulang Caun</div>
-    </div>
-    <div class="slide">
-      <img src="img/15.jpeg" alt="Foto 3">
-      <div class="caption">Ceyamat Uyang Taun Olang Aneh</div>
-    </div>
-    <div class="slide">
-      <img src="img/18.jpeg" alt="Foto 3">
-      <div class="caption">Terimakasih atas segalanya yah</div>
-    </div>
-    <div class="slide">
-      <img src="img/12.jpeg" alt="Foto 3">
-      <div class="caption">Semoga selalu nyaman bersamaku 😊</div>
-    </div>
-    <div class="slide">
-      <img src="img/14.jpeg" alt="Foto 3">
-      <div class="caption">Dear Mungilku...</div>
-    </div>
-    <div class="slide">
-      <img src="img/1.jpeg" alt="Foto 4">
-      <div class="caption">Aku Mencintaimu ❤️</div>
-    </div>
+  <div id="slideshow">
+    <img src="img1.jpg" class="active" alt="Foto 1" />
+    <img src="img2.jpg" alt="Foto 2" />
+    <img src="img3.jpg" alt="Foto 3" />
+    <img src="img4.jpg" alt="Foto 4" />
   </div>
 
-  <!-- Musik Latar -->
-  <audio id="bg-music" src="1.mp3" loop></audio>
+  <div id="balloons"></div>
 
-  <!-- Modal Musik + Countdown -->
-  <div class="modal" id="music-modal">
-    <div class="modal-content" id="modal-content">
-      <h2>🎵 Surpriseee! 🎉</h2>
-      <button id="start-music">Ayoo!</button>
-      <div id="countdown"></div>
-    </div>
-  </div>
+  <audio id="music" src="musik.mp3"></audio>
 
   <script>
-    const bgMusic = document.getElementById("bg-music");
-    const musicModal = document.getElementById("music-modal");
-    const startMusicBtn = document.getElementById("start-music");
+    const startBtn = document.getElementById("start-btn");
     const countdownEl = document.getElementById("countdown");
-    const slides = document.querySelectorAll('.slide');
-    let slideIndex = 0;
-    let slideInterval;
+    const slideshow = document.getElementById("slideshow");
+    const balloons = document.getElementById("balloons");
+    const music = document.getElementById("music");
+    const images = document.querySelectorAll("#slideshow img");
+    let currentIndex = 0;
 
-    // Fungsi buat munculin balon
-    function createBalloons() {
-      for (let i = 0; i < 10; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.style.left = Math.random() * window.innerWidth + 'px';
-        balloon.style.backgroundColor = getRandomColor();
-        balloon.style.animationDuration = 3 + Math.random() * 3 + 's';
-        document.body.appendChild(balloon);
-        setTimeout(() => balloon.remove(), 6000);
-      }
+    // Fungsi bikin balon acak
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+      balloon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      balloons.appendChild(balloon);
+
+      setTimeout(() => balloon.remove(), 6000);
     }
 
-    function getRandomColor() {
-      const colors = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#E73C7E'];
-      return colors[Math.floor(Math.random() * colors.length)];
+    // Slideshow otomatis
+    function startSlideshow() {
+      setInterval(() => {
+        images[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.add("active");
+      }, 10000); // 10 detik per gambar
     }
 
-    function showSlide(n) {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active');
-        if (i === n) slide.classList.add('active');
-      });
-      createBalloons();
-    }
-
-    function nextSlide() {
-      slideIndex = (slideIndex + 1) % slides.length;
-      showSlide(slideIndex);
-    }
-
-    // Countdown logic + mulai slideshow
-    startMusicBtn.addEventListener("click", () => {
-      startMusicBtn.style.display = "none";
+    startBtn.addEventListener("click", () => {
+      startBtn.style.display = "none";
       countdownEl.style.display = "block";
 
-      let counter = 5;
-      countdownEl.textContent = counter;
+      let count = 5;
+      countdownEl.textContent = count;
 
-      const countdownInterval = setInterval(() => {
-        counter--;
-        countdownEl.textContent = counter;
+      const timer = setInterval(() => {
+        count--;
+        countdownEl.textContent = count;
 
-        if (counter === 0) {
-          clearInterval(countdownInterval);
-          bgMusic.play();
-          musicModal.style.display = "none";
-          nextSlide();
-          createBalloons();
-          slideInterval = setInterval(nextSlide, 6000);
+        if (count === 0) {
+          clearInterval(timer);
+          countdownEl.style.display = "none";
+
+          // Mulai musik, slideshow, dan balon
+          music.play();
+          slideshow.style.display = "block";
+          balloons.style.display = "block";
+          startSlideshow();
+          setInterval(createBalloon, 400);
         }
       }, 1000);
     });
   </script>
 </body>
 </html>
-
-
