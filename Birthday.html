@@ -3,165 +3,277 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
+  <title>Tadaaa 🎉</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #000;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
+      overflow: hidden;
       text-align: center;
+      cursor: url('img/icon.png') 32 32, auto;
     }
 
     h1 {
       font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
 
-    #countdown {
-      font-size: 3rem;
-      margin-top: 20px;
-      display: none;
-    }
-
-    #slideshow {
-      display: none;
+    .slideshow-container {
       position: relative;
-      width: 80%;
+      width: 90%;
       max-width: 600px;
-      height: 350px;
+      aspect-ratio: 4/3;
       overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.5);
-      margin-top: 20px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      background: #fff;
+      display: none; /* disembunyikan sebelum countdown selesai */
     }
 
-    #slideshow img {
+    .slide {
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      border-radius: 20px;
     }
 
-    #slideshow img.active {
+    .slide.active {
       opacity: 1;
+      z-index: 1;
     }
 
-    #balloons {
-      display: none;
+    .caption {
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 15px;
       position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      pointer-events: none;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      width: 80%;
     }
 
+    /* Countdown */
+    #countdown {
+      display: none;
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Balon */
     .balloon {
       position: absolute;
+      bottom: -150px;
       width: 40px;
       height: 50px;
       background-color: red;
       border-radius: 50%;
+      opacity: 0.8;
       animation: float 6s linear infinite;
     }
 
     @keyframes float {
-      0% { transform: translateY(100vh) scale(1); opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+      0% { transform: translateY(0); opacity: 0.9; }
+      100% { transform: translateY(-120vh); opacity: 0; }
     }
 
-    #start-btn {
-      padding: 12px 25px;
-      background-color: #ff4081;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      cursor: pointer;
+    /* Modal musik */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      max-width: 350px;
+      width: 80%;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal h2 {
+      margin-bottom: 10px;
+      color: #ff4e50;
+    }
+
+    .modal button {
+      background: #ff4e50;
       color: white;
-      transition: background 0.3s;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    #start-btn:hover {
-      background-color: #e91e63;
+    .modal button:hover {
+      background: #e43a3d;
+    }
+
+    /* Responsif */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .caption {
+        font-size: 1rem;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🎂 Selamat Ulang Tahun 🎂</h1>
-  <button id="start-btn">Ayo 🎉</button>
+  <h1>🎉 Selamat Ulang Tahun Tayaang 😊 🎉</h1>
+
+  <!-- Countdown -->
   <div id="countdown">5</div>
 
-  <div id="slideshow">
-    <img src="img1.jpg" class="active" alt="Foto 1" />
-    <img src="img2.jpg" alt="Foto 2" />
-    <img src="img3.jpg" alt="Foto 3" />
-    <img src="img4.jpg" alt="Foto 4" />
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="img/16.jpeg" alt="Foto 1">
+      <div class="caption">Ceyamat Ulang Cayun</div>
+    </div>
+    <div class="slide">
+      <img src="img/17.jpeg" alt="Foto 2">
+      <div class="caption">Ceyamat Ulang Caun</div>
+    </div>
+    <div class="slide">
+      <img src="img/15.jpeg" alt="Foto 3">
+      <div class="caption">Ceyamat Uyang Taun Olang Aneh</div>
+    </div>
+    <div class="slide">
+      <img src="img/18.jpeg" alt="Foto 4">
+      <div class="caption">Terimakasih atas segalanya yah</div>
+    </div>
+    <div class="slide">
+      <img src="img/12.jpeg" alt="Foto 5">
+      <div class="caption">Semoga selalu nyaman bersamaku 😊</div>
+    </div>
+    <div class="slide">
+      <img src="img/14.jpeg" alt="Foto 6">
+      <div class="caption">Dear Mungilku...</div>
+    </div>
+    <div class="slide">
+      <img src="img/1.jpeg" alt="Foto 7">
+      <div class="caption">Aku Mencintaimu ❤️</div>
+    </div>
   </div>
 
-  <div id="balloons"></div>
+  <!-- Musik Latar -->
+  <audio id="bg-music" src="1.mp3" loop></audio>
 
-  <audio id="music" src="musik.mp3"></audio>
+  <!-- Modal Musik -->
+  <div class="modal" id="music-modal">
+    <div class="modal-content">
+      <h2>🎵 Surpriseee! 🎉</h2>
+      <button id="start-music">Ayoo!</button>
+    </div>
+  </div>
 
   <script>
-    const startBtn = document.getElementById("start-btn");
-    const countdownEl = document.getElementById("countdown");
-    const slideshow = document.getElementById("slideshow");
-    const balloons = document.getElementById("balloons");
-    const music = document.getElementById("music");
-    const images = document.querySelectorAll("#slideshow img");
-    let currentIndex = 0;
+    const bgMusic = document.getElementById("bg-music");
+    const musicModal = document.getElementById("music-modal");
+    const startMusicBtn = document.getElementById("start-music");
+    const countdown = document.getElementById("countdown");
+    const slideshow = document.querySelector(".slideshow-container");
+    const slides = document.querySelectorAll(".slide");
+    let slideIndex = 0;
+    let slideInterval;
 
-    // Fungsi bikin balon acak
-    function createBalloon() {
-      const balloon = document.createElement("div");
-      balloon.classList.add("balloon");
-      balloon.style.left = Math.random() * 100 + "vw";
-      balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-      balloon.style.animationDuration = (Math.random() * 3 + 3) + "s";
-      balloons.appendChild(balloon);
+    // Fungsi balon
+    function createBalloons() {
+      for (let i = 0; i < 10; i++) {
+        const balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * window.innerWidth + "px";
+        balloon.style.backgroundColor = getRandomColor();
+        balloon.style.animationDuration = 3 + Math.random() * 3 + "s";
+        document.body.appendChild(balloon);
 
-      setTimeout(() => balloon.remove(), 6000);
+        setTimeout(() => balloon.remove(), 6000);
+      }
     }
 
-    // Slideshow otomatis
-    function startSlideshow() {
-      setInterval(() => {
-        images[currentIndex].classList.remove("active");
-        currentIndex = (currentIndex + 1) % images.length;
-        images[currentIndex].classList.add("active");
-      }, 10000); // 10 detik per gambar
+    function getRandomColor() {
+      const colors = ["#FF6B6B","#FFD93D","#6BCB77","#4D96FF","#E73C7E"];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    startBtn.addEventListener("click", () => {
-      startBtn.style.display = "none";
-      countdownEl.style.display = "block";
+    function showSlide(n) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === n) slide.classList.add("active");
+      });
+      createBalloons();
+    }
 
-      let count = 5;
-      countdownEl.textContent = count;
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Countdown → mulai slideshow
+    startMusicBtn.addEventListener("click", () => {
+      bgMusic.play(); // Musik langsung nyala
+      musicModal.style.display = "none";
+      countdown.style.display = "block";
+
+      let timeLeft = 5;
+      countdown.textContent = timeLeft;
 
       const timer = setInterval(() => {
-        count--;
-        countdownEl.textContent = count;
+        timeLeft--;
+        countdown.textContent = timeLeft;
 
-        if (count === 0) {
+        if (timeLeft === 0) {
           clearInterval(timer);
-          countdownEl.style.display = "none";
-
-          // Mulai musik, slideshow, dan balon
-          music.play();
+          countdown.style.display = "none";
           slideshow.style.display = "block";
-          balloons.style.display = "block";
-          startSlideshow();
-          setInterval(createBalloon, 400);
+
+          // Mulai slideshow 10 detik per gambar
+          showSlide(0);
+          slideInterval = setInterval(nextSlide, 10000);
         }
       }, 1000);
     });
