@@ -215,6 +215,244 @@
     const countdownEl = document.getElementById("countdown");
     const slides = document.querySelectorAll('.slide');
     let slideIndex = 0;
+    let slideInterval;
+
+    // Fungsi buat munculin balon
+    function createBalloons() {
+      for (let i = 0; i < 10; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * window.innerWidth + 'px';
+        balloon.style.backgroundColor = getRandomColor();
+        balloon.style.animationDuration = 3 + Math.random() * 3 + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 6000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#E73C7E'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function showSlide(n) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === n) slide.classList.add('active');
+      });
+      createBalloons();
+    }
+
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    // Countdown logic + mulai slideshow
+    startMusicBtn.addEventListener("click", () => {
+      startMusicBtn.style.display = "none";
+      countdownEl.style.display = "block";
+
+      let counter = 5;
+      countdownEl.textContent = counter;
+
+      const countdownInterval = setInterval(() => {
+        counter--;
+        countdownEl.textContent = counter;
+
+        if (counter === 0) {
+          clearInterval(countdownInterval);
+          bgMusic.play();
+          musicModal.style.display = "none";
+          nextSlide();
+          createBalloons();
+          slideInterval = setInterval(nextSlide, 6000);
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>      background: #fff;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .caption {
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 15px;
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      width: 80%;
+    }
+
+    /* Balon */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 40px;
+      height: 50px;
+      background-color: red;
+      border-radius: 50% 50% 50% 50%;
+      opacity: 0.8;
+      animation: float 6s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 0.9; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    /* Modal musik + countdown */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      max-width: 350px;
+      width: 80%;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal h2 {
+      margin-bottom: 10px;
+      color: #ff4e50;
+    }
+
+    .modal button {
+      background: #ff4e50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .modal button:hover {
+      background: #e43a3d;
+    }
+
+    /* Countdown */
+    #countdown {
+      font-size: 5rem;
+      color: #ff4e50;
+      font-weight: bold;
+      display: none;
+      animation: scaleUp 1s ease infinite;
+    }
+
+    @keyframes scaleUp {
+      0% { transform: scale(0.5); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+
+    /* Responsif */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.8rem; }
+      .caption { font-size: 1rem; padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Selamat Ulang Tahun Tayaang 😊 🎉</h1>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="img/16.jpeg" alt="Foto 1">
+      <div class="caption">Ceyamat Ulang Cayun</div>
+    </div>
+    <div class="slide">
+      <img src="img/17.jpeg" alt="Foto 2">
+      <div class="caption">Ceyamat Ulang Caun</div>
+    </div>
+    <div class="slide">
+      <img src="img/15.jpeg" alt="Foto 3">
+      <div class="caption">Ceyamat Uyang Taun Olang Aneh</div>
+    </div>
+    <div class="slide">
+      <img src="img/18.jpeg" alt="Foto 3">
+      <div class="caption">Terimakasih atas segalanya yah</div>
+    </div>
+    <div class="slide">
+      <img src="img/12.jpeg" alt="Foto 3">
+      <div class="caption">Semoga selalu nyaman bersamaku 😊</div>
+    </div>
+    <div class="slide">
+      <img src="img/14.jpeg" alt="Foto 3">
+      <div class="caption">Dear Mungilku...</div>
+    </div>
+    <div class="slide">
+      <img src="img/1.jpeg" alt="Foto 4">
+      <div class="caption">Aku Mencintaimu ❤️</div>
+    </div>
+  </div>
+
+  <!-- Musik Latar -->
+  <audio id="bg-music" src="1.mp3" loop></audio>
+
+  <!-- Modal Musik + Countdown -->
+  <div class="modal" id="music-modal">
+    <div class="modal-content" id="modal-content">
+      <h2>🎵 Surpriseee! 🎉</h2>
+      <button id="start-music">Ayoo!</button>
+      <div id="countdown"></div>
+    </div>
+  </div>
+
+  <script>
+    const bgMusic = document.getElementById("bg-music");
+    const musicModal = document.getElementById("music-modal");
+    const startMusicBtn = document.getElementById("start-music");
+    const countdownEl = document.getElementById("countdown");
+    const slides = document.querySelectorAll('.slide');
+    let slideIndex = 0;
 
     // Fungsi buat munculin balon
     function createBalloons() {
@@ -273,4 +511,5 @@
   </script>
 </body>
 </html>
+
 
