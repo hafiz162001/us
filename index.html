@@ -1,174 +1,512 @@
-
-
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday 🎉</title>
+  <title>Kita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Game Gallery Section */
+     .game-gallery-section {
+      display: none;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      background-color: #000;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
+      padding: 20px;
+      min-height: 100vh;
+
+    }
+
+    /* Title */
+    .gallery-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0a2342;
+      margin-bottom: 25px;
       text-align: center;
     }
 
-    h1 {
-      font-size: 2.5rem;
-    }
-
-    #countdown {
-      font-size: 3rem;
-      margin-top: 20px;
-      display: none;
-    }
-
-    #slideshow {
-      display: none;
-      position: relative;
-      width: 80%;
-      max-width: 600px;
-      height: 350px;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.5);
-      margin-top: 20px;
-    }
-
-    #slideshow img {
-      position: absolute;
+    /* Gallery Grid */
+    .game-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
       width: 100%;
-      height: 100%;
+      max-width: 900px;
+      padding: 0 10px;
+    }
+
+    /* Gallery Item */
+    .gallery-item {
+      background-color: #102f5e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Gallery Images */
+    .gallery-item img {
+      width: 100%;
+      height: auto;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      display: block;
     }
 
-    #slideshow img.active {
-      opacity: 1;
+    /* Back Button */
+    .back-button {
+      margin-top: 30px;
+      padding: 12px 28px;
+
+
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    
+      text-align: center;
     }
 
-    #balloons {
-      display: none;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .gallery-title {
+        font-size: 24px;
+      }
+
+      .game-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+      }
+
+      .gallery-item img {
+        height: auto;
+      }
+
+      .back-button {
+        width: 80%;
+        padding: 10px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-title {
+        font-size: 20px;
+      }
+
+      .game-gallery {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .back-button {
+        width: 100%;
+        font-size: 14px;
+      }
+    }
+
+    /* Gallery Item */
+    .gallery-item {
+      background-color: #102f5e;
+      border-radius: 12px;
       overflow: hidden;
-      pointer-events: none;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
     }
 
-    .balloon {
-      position: absolute;
-      width: 40px;
-      height: 50px;
-      background-color: red;
-      border-radius: 50%;
-      animation: float 6s linear infinite;
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     }
 
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(1); opacity: 1; }
-      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    /* Gallery Images */
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
 
-    #start-btn {
-      padding: 12px 25px;
-      background-color: #ff4081;
+    /* Back Button */
+    .back-button {
+      margin-top: 30px;
+      padding: 12px 28px;
+   
+    
       border: none;
       border-radius: 8px;
-      font-size: 1.2rem;
       cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+  
+      text-align: center;
+    }
+
+    
+
+    /* Tombol Chat */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 150px;
+      right: 15px;
+      width: 58px;
+      height: 58px;
+      background-color: #0a2342;
       color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      font-size: 30px;
+      transition: 0.3s ease;
+      z-index: 999;
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+      background-color: #123d6f;
+    }
+
+    /* Container Chatbot */
+    .chatbot-container {
+      position: fixed;
+      bottom: 200px;
+      right: 25px;
+      width: 350px;
+      max-height: 500px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header Chatbot */
+    .chatbot-header {
+      background-color: #0a2342;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Isi Chat */
+    .chatbot-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #f8fafc;
+    }
+
+    /* Pesan Bot */
+    .bot-message {
+      background-color: #e7f0ff;
+      color: #0a2342;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 8px 0;
+      max-width: 80%;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Pesan User */
+    .user-message {
+      background-color: #0a2342;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 8px 0;
+      max-width: 80%;
+      font-size: 14px;
+      align-self: flex-end;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Footer Chatbot */
+    .chatbot-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    .chatbot-footer input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .chatbot-footer input:focus {
+      border-color: #0a2342;
+    }
+
+    .chatbot-footer button {
+      background-color: #0a2342;
+      border: none;
+      color: white;
+      margin-left: 8px;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
       transition: background 0.3s;
     }
 
-    #start-btn:hover {
-      background-color: #e91e63;
+    .chatbot-footer button:hover {
+      background-color: #123d6f;
+    }
+
+    /* Scrollbar modern */
+    .chatbot-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chatbot-body::-webkit-scrollbar-thumb {
+      background: #b5c4e3;
+      border-radius: 3px;
+    }
+    .chatbot-body::-webkit-scrollbar-track {
+      background: transparent;
     }
   </style>
 </head>
 <body>
-  <h1>🎂 Selamat Ulang Tahun 🎂</h1>
-  <button id="start-btn">Ayo 🎉</button>
-  <div id="countdown">5</div>
+  <div class="container" id="main">
+    <div class="card app"></div>
 
-  <div id="slideshow">
-    <img src="img1.jpg" class="active" alt="Foto 1" />
-    <img src="img2.jpg" alt="Foto 2" />
-    <img src="img3.jpg" alt="Foto 3" />
-    <img src="img4.jpg" alt="Foto 4" />
+    <div class="image1">
+      <div class="meme-caption caption-top"></div>
+      <div class="meme-caption caption-bottom"></div>
+    </div>
+
+    <div class="image2">
+      <div class="meme-caption caption-top"></div>
+      <div class="meme-caption caption-bottom"></div>
+    </div>
+
+    <div class="card calendar-date">
+      <span id="current-date"></span>
+      <div class="calendar-day" id="calendar-day"></div>
+      <div class="calendar-month-year" id="calendar-month-year"></div>
+    </div>
+
+    <div class="card circle-clock">
+      <div id="current-time"></div>
+    </div>
+
+    <div class="mini-image"></div>
+    <div class="card checklist"></div>
+    <div class="circle-img"></div>
+
+    <div class="footer-menu">
+      <div class="menu-button" onclick="showGameGallery()">
+        <div class="menu-icon">🎮</div>Game
+      </div>
+
+      <div class="menu-button" onclick="showGallery()">
+        <div class="menu-icon">🍕</div>Makan
+      </div>
+
+      <!-- <div class="menu-button" onclick="window.location.href='Birthday.html'">
+        <div class="menu-icon">🎂</div>Habede
+      </div>
+
+      <div class="menu-button" onclick="alert('🔔 Notification: Time to sleep!')">
+        <div class="menu-icon">🔔</div>Notification
+      </div> -->
+    </div>
   </div>
 
-  <div id="balloons"></div>
+  <!-- Game Gallery Section -->
+  <div class="game-gallery-section" id="game-gallery">
+    <h2 class="gallery-title">🎮 Gameee</h2>
+    
+    <div class="game-gallery">
+      <div class="gallery-item"><img src="img/2.jpeg" alt="Game 1"></div>
+      <div class="gallery-item"><img src="img/3.jpeg" alt="Game 2"></div>
+      <div class="gallery-item"><img src="img/8.jpeg" alt="Game 3"></div>
+      <div class="gallery-item"><img src="img/10.jpeg" alt="Game 4"></div>
+      <div class="gallery-item"><img src="img/11.jpeg" alt="Game 5"></div>
+      <div class="gallery-item"><img src="img/19.jpeg" alt="Game 6"></div>
+    </div>
 
-  <audio id="music" src="musik.mp3"></audio>
+    <button class="back-button" onclick="goBack()">⬅ kembali</button>
+  </div>
+
+  <div class="gallery-section" id="gallery">
+    <div class="gallery-item"><img src="game/1.jpeg" alt="cat meme"></div>
+    <div class="gallery-item"><img src="game/2.jpeg" alt="bf meme"></div>
+    <div class="gallery-item"><img src="game/3.jpeg" alt="lotr meme"></div>
+    <div class="gallery-item"><img src="game/4.jpeg" alt="bf meme"></div>
+    <div class="gallery-item"><img src="game/5.jpeg" alt="lotr meme"></div>
+    <div class="gallery-item"><img src="game/6.jpeg" alt="lotr meme"></div>
+    <div class="back-button" onclick="goBack()">⬅ kembali</div>
+  </div>
+
+  <!-- Tombol Chat -->
+  <div class="chatbot-btn" id="chatbot-btn">🎁</div>
+
+  <!-- Panel Chatbot -->
+  <div class="chatbot-container" id="chatbot-container">
+    <div class="chatbot-header">🎉 Kejutan Spesial!</div>
+    <div class="chatbot-body" id="chatbot-body">
+      <div class="bot-message">Hai tayang😊</div>
+      <div class="bot-message">Hmm... kayaknya hari ini ada sesuatu yang aneh😵</div>
+      <div class="bot-message">tauu nggak? Ketik <b>ya</b> atau <b>engga</b> 😉</div>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" id="user-input" placeholder="Ketik pesan di sini..." />
+      <button id="send-btn">➤</button>
+    </div>
+  </div>
 
   <script>
-    const startBtn = document.getElementById("start-btn");
-    const countdownEl = document.getElementById("countdown");
-    const slideshow = document.getElementById("slideshow");
-    const balloons = document.getElementById("balloons");
-    const music = document.getElementById("music");
-    const images = document.querySelectorAll("#slideshow img");
-    let currentIndex = 0;
+    const gallery = document.getElementById('gallery');
+    const main = document.getElementById("main");
+    const gameGallery = document.getElementById("game-gallery");
 
-    // Fungsi bikin balon acak
-    function createBalloon() {
-      const balloon = document.createElement("div");
-      balloon.classList.add("balloon");
-      balloon.style.left = Math.random() * 100 + "vw";
-      balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-      balloon.style.animationDuration = (Math.random() * 3 + 3) + "s";
-      balloons.appendChild(balloon);
+    const showGameGallery = () => {
+      main.style.display = "none";
+      gameGallery.style.display = "flex";
+    };
 
-      setTimeout(() => balloon.remove(), 6000);
-    }
+    const showGallery = () => {
+      main.style.display = 'none';
+      gallery.classList.add('active');
+    };
 
-    // Slideshow otomatis
-    function startSlideshow() {
-      setInterval(() => {
-        images[currentIndex].classList.remove("active");
-        currentIndex = (currentIndex + 1) % images.length;
-        images[currentIndex].classList.add("active");
-      }, 10000); // 10 detik per gambar
-    }
+    const goBack = () => {
+      main.style.display = 'grid';
+      gallery.classList.remove('active');
+      gameGallery.style.display = "none";
+    };
 
-    startBtn.addEventListener("click", () => {
-      startBtn.style.display = "none";
-      countdownEl.style.display = "block";
+    const updateDateTime = () => {
+      const now = new Date();
+      const dateOptions = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/New_York' };
+      const dateStr = now.toLocaleDateString('en-GB', dateOptions);
+      document.getElementById('current-date').textContent = dateStr;
+      document.getElementById('current-time').textContent =
+        now.toLocaleTimeString('en-GB', { timeZone: 'America/New_York' });
+    };
 
-      let count = 5;
-      countdownEl.textContent = count;
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
 
-      const timer = setInterval(() => {
-        count--;
-        countdownEl.textContent = count;
+    const chatbotBtn = document.getElementById("chatbot-btn");
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatbotBody = document.getElementById("chatbot-body");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
 
-        if (count === 0) {
-          clearInterval(timer);
-          countdownEl.style.display = "none";
+    const surpriseMessages = [
+      "Hehehe 😎, aku udah nebak kamu bakal jawab gitu!",
+      "Sekarang tutup mata kamu sebentar 👀...",
+      "Bayangin banyak balon 🎈, kue 🎂, dan aku datang menghampirimu...",
+      "Dan aku berbisik...hari ini kamu... ",
+      "🎉 ULANG TAHUN!! 🎉",
+      "Klik link iniii ya! 😍👇",
+    ];
 
-          // Mulai musik, slideshow, dan balon
-          music.play();
-          slideshow.style.display = "block";
-          balloons.style.display = "block";
-          startSlideshow();
-          setInterval(createBalloon, 400);
-        }
-      }, 1000);
+    const surpriseLink = "https://hafiz162001.github.io/us/Birthday.html";
+    let stage = 0;
+
+    chatbotBtn.addEventListener("click", () => {
+      chatbotContainer.style.display =
+        chatbotContainer.style.display === "flex" ? "none" : "flex";
+      chatbotContainer.style.flexDirection = "column";
     });
+
+    sendBtn.addEventListener("click", sendMessage);
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
+      const message = userInput.value.trim().toLowerCase();
+      if (message === "") return;
+
+      const userMsg = document.createElement("div");
+      userMsg.classList.add("user-message");
+      userMsg.textContent = message;
+      chatbotBody.appendChild(userMsg);
+
+      setTimeout(() => {
+        const botMsg = document.createElement("div");
+        botMsg.classList.add("bot-message");
+
+        if (stage === 0) {
+          if (message === "ya" || message === "iya" || message === "mau") {
+            botMsg.textContent = surpriseMessages[stage];
+            stage++;
+          } else {
+            botMsg.textContent = "Yakin gaa? Coba ketik 'ya'...";
+          }
+        } else if (stage < surpriseMessages.length) {
+          botMsg.textContent = surpriseMessages[stage];
+          stage++;
+
+          if (stage === surpriseMessages.length) {
+            const link = document.createElement("a");
+            link.href = surpriseLink;
+            link.target = "_blank";
+            link.textContent = "🎁 Buka Hadiah 🎁";
+            link.style.display = "inline-block";
+            link.style.marginTop = "8px";
+            link.style.backgroundColor = "#0077ff";
+            link.style.color = "white";
+            link.style.padding = "6px 12px";
+            link.style.borderRadius = "6px";
+            link.style.textDecoration = "none";
+            link.style.fontWeight = "bold";
+            botMsg.appendChild(document.createElement("br"));
+            botMsg.appendChild(link);
+          }
+        }
+
+        chatbotBody.appendChild(botMsg);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }, 600);
+
+      userInput.value = "";
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
   </script>
 </body>
 </html>
-
-
